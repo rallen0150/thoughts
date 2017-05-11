@@ -1,3 +1,4 @@
 from django.contrib import admin
+from thoughts.models import Blog, Category
 
-# Register your models here.
+admin.site.register([Blog, Category])
