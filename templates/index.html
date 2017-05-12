@@ -4,8 +4,8 @@
   {% if not request.user.is_authenticated %}
     <form class="" action="{% url 'login' %}" method="post">
       {% csrf_token %}
-      <p><input type="text" name="username" placeholder="Username"></p>
-      <p><input type="password" name="password" placeholder="Password"></p>
+      <p>Username: <input type="text" name="username" placeholder="Username"></p>
+      <p>Password: <input type="password" name="password" placeholder="Password"></p>
       <input type="submit" name="" value="Login">
     </form>
   {% else %}

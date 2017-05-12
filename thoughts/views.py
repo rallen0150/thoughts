@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from thoughts.models import Blog
+from thoughts.models import Blog, Category, Profile
 
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -24,7 +24,10 @@ class UserCreateView(FormView):
     template_name = "auth/user_form.html"
     model = User
     form_class = UserCreationForm
-    success_url = reverse_lazy('index_view')
+    # success_url = reverse_lazy('index_view')
+
+    def get_success_url(self, **kwargs):
+      return reverse_lazy('profile_create_view')
 
     # Had to look this up on StackOverflow
     def form_valid(self, form):
@@ -37,3 +40,33 @@ class UserCreateView(FormView):
       user = authenticate(username=username, password=password)
       login(self.request, user)
       return super(UserCreateView, self).form_valid(form)
+
+class CategoryCreateView(CreateView):
+    model = Category
+    fields = ('title', )
+    success_url = reverse_lazy('index_view')
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        return super().form_valid(form)
+
+class ProfileCreateView(CreateView):
+    model = Profile
+    fields = ('first_name', 'last_name', 'avatar')
+    success_url = reverse_lazy('index_view')
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        return super().form_valid(form)
+
+class ProfileUpdateView(UpdateView):
+    model = Profile
+    fields = ('first_name', 'last_name', 'avatar')
+    success_url = reverse_lazy('index_view')
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        return super().form_valid(form)
