@@ -18,7 +18,8 @@
         <a href="{% url 'user_create_view' %}">New User</a> |
         <a href="{% url 'login' %}">Login</a> |
       {% else %}
-        <a href="{% url 'category_create_view' %}">New Category</a> | 
+        <a href="{% url 'category_create_view' %}">New Category</a> |
+        <a href="{% url 'profile_update_view' request.user request.user.id %}">Profile Update</a> |
         <a href="{% url 'logout' %}?next={% url 'index_view' %}">Logout</a> |
       {% endif %}
       <br><br>
