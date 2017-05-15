@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from thoughts.views import IndexView, UserCreateView, CategoryCreateView, ProfileUpdateView, \
-                           ProfileCreateView
+                           ProfileCreateView, CategoryListView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^new_user/$', UserCreateView.as_view(), name='user_create_view'),
     url(r'^category/create/$', CategoryCreateView.as_view(), name='category_create_view'),
     url(r'^profile/create/$', ProfileCreateView.as_view(), name='profile_create_view'),
-    url(r'^profile/update/(?P<first_name>[-\w]+)-(?P<last_name>[-\w]+)/(?P<pk>\d+)/$', ProfileUpdateView.as_view(), name='profile_update_view'),
+    url(r'^profile/update/(?P<random_url>[-\w]+)/(?P<pk>\d+)/$', ProfileUpdateView.as_view(), name='profile_update_view'),
+    url(r'^category/$', CategoryListView.as_view(), name='category_list_view'),
 ]

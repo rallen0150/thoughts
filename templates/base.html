@@ -18,8 +18,12 @@
         <a href="{% url 'user_create_view' %}">New User</a> |
         <a href="{% url 'login' %}">Login</a> |
       {% else %}
+        <a href="{% url 'category_list_view' %}">Your Categories</a> |
         <a href="{% url 'category_create_view' %}">New Category</a> |
-        <a href="{% url 'profile_update_view' request.user.profile.first_name request.user.profile.last_name request.user.id %}">Profile Update</a> |
+        {% if request.user.profile.first_name == '' %}
+        {% else %}
+          <a href="{% url 'profile_update_view' request.user.profile.random_url request.user.id %}">Profile Update</a> |
+        {% endif %}
         <a href="{% url 'logout' %}?next={% url 'index_view' %}">Logout</a> |
       {% endif %}
       <br><br>

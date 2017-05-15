@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
 
+from random import choice
+from string import ascii_lowercase, ascii_uppercase, digits
+
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, FormView
 
@@ -49,6 +52,9 @@ class CategoryCreateView(CreateView):
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.user = self.request.user
+        instance.random_url = ''
+        for i in range(20):
+            instance.random_url += choice(ascii_lowercase + ascii_uppercase + digits)
         return super().form_valid(form)
 
 class ProfileCreateView(CreateView):
@@ -59,6 +65,15 @@ class ProfileCreateView(CreateView):
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.user = self.request.user
+        instance.random_url = ''
+        for i in range(5):
+            instance.random_url += choice(ascii_lowercase + ascii_uppercase + digits)
+        instance.random_url += self.request.user.profile.first_name[0:3]
+        for i in range(5):
+            instance.random_url += choice(ascii_lowercase + ascii_uppercase + digits)
+        instance.random_url += self.request.user.profile.first_name[3:]
+        for i in range(5):
+            instance.random_url += choice(ascii_lowercase + ascii_uppercase + digits)
         return super().form_valid(form)
 
 class ProfileUpdateView(UpdateView):
@@ -69,4 +84,21 @@ class ProfileUpdateView(UpdateView):
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.user = self.request.user
+        instance.random_url = ''
+        for i in range(5):
+            instance.random_url += choice(ascii_lowercase + ascii_uppercase + digits)
+        instance.random_url += self.request.user.profile.first_name[0:3]
+        for i in range(5):
+            instance.random_url += choice(ascii_lowercase + ascii_uppercase + digits)
+        instance.random_url += self.request.user.profile.first_name[3:]
+        for i in range(5):
+            instance.random_url += choice(ascii_lowercase + ascii_uppercase + digits)
         return super().form_valid(form)
+
+class CategoryListView(ListView):
+    model = Category
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = Category.objects.get(user=self.request.user)
+        return context
