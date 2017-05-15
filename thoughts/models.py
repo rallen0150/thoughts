@@ -22,12 +22,17 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def get_posts(self):
+        return Blog.objects.filter(category=self)
+
 class Blog(models.Model):
     text = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     writer = models.ForeignKey('auth.User')
     title = models.CharField(max_length=255)
     category = models.ForeignKey(Category)
+    random_url = models.CharField(max_length=20, blank=True, null=True, unique=True)
 
     def __str__(self):
         return self.title

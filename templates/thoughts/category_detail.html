@@ -3,4 +3,9 @@
 {% block content %}
   <a href="{% url 'blog_create_view' object.random_url object.id %}">New Post</a>
   <h1>{{ category }}</h1>
+  {% for x in category.get_posts %}
+    <div>
+      <a href="{% url 'blog_detail_view' x.random_url x.id %}">{{ x }}</a>
+    </div>
+  {% endfor %}
 {% endblock %}
