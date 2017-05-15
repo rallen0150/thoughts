@@ -102,3 +102,22 @@ class CategoryListView(ListView):
         context = super().get_context_data(**kwargs)
         context['category'] = Category.objects.get(user=self.request.user)
         return context
+
+class CategoryDetailView(DetailView):
+    model = Category
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['details'] = Category.objects.filter(id=self.kwargs['pk'])
+        return context
+
+class BlogCreateView(CreateView):
+    model = Blog
+    fields = ('title', 'text')
+    success_url = reverse_lazy('category_list_view')
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.writer = self.request.user
+        instance.category = Category.objects.get(id=self.kwargs['pk'])
+        return super().form_valid(form)

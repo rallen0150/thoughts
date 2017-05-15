@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <a href="{% url 'blog_create_view' object.random_url object.id %}">New Post</a>
+  <h1>{{ category }}</h1>
+{% endblock %}

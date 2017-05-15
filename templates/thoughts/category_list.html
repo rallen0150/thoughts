@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {{ category }}
+  {% for x in object_list %}
+    {% if x.user == request.user %}
+      <a href="{% url 'category_detail_view' x.random_url x.id %}">{{ category }}</a>
+    {% endif %}
+  {% endfor %}
 {% endblock %}
