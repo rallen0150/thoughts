@@ -8,5 +8,12 @@
       <b style="font-size:22px;"><i>{{ post.text }}</i></b> <br>
       <a href="{% url 'blog_text_update_view' post.random_url post.id %}">Update Text</a>
     </blockquote>
+    <a href="{% url 'reply_create_view' post.random_url post.id %}">Reply</a> <br>
+    {% for reply in post.get_reply %}
+      <blockquote>
+        <b style="font-size:22px;"><i>{{ reply }}</i></b> <br>
+        <a href="{% url 'reply_update_view' reply.id %}">Update Reply</a>
+      </blockquote>
+    {% endfor %}
   {% endfor %}
 {% endblock %}

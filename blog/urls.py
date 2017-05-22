@@ -3,7 +3,8 @@ from django.contrib import admin
 
 from thoughts.views import IndexView, UserCreateView, CategoryCreateView, ProfileUpdateView, \
                            ProfileCreateView, CategoryListView, CategoryDetailView, BlogCreateView, \
-                           BlogDetailView, CategoryUpdateView, BlogTextUpdateView, BlogTitleUpdateView
+                           BlogDetailView, CategoryUpdateView, BlogTextUpdateView, BlogTitleUpdateView, \
+                           ReplyCreateView, ReplyUpdateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -20,4 +21,6 @@ urlpatterns = [
     url(r'^post/(?P<random_url>[-\w]+)/(?P<pk>\d+)/$', BlogDetailView.as_view(), name='blog_detail_view'),
     url(r'^post/(?P<random_url>[-\w]+)/(?P<pk>\d+)/update_text/$', BlogTextUpdateView.as_view(), name='blog_text_update_view'),
     url(r'^post/(?P<random_url>[-\w]+)/(?P<pk>\d+)/update_title/$', BlogTitleUpdateView.as_view(), name='blog_title_update_view'),
+    url(r'^post/(?P<random_url>[-\w]+)/(?P<pk>\d+)/reply/$', ReplyCreateView.as_view(), name='reply_create_view'),
+    url(r'reply/(?P<pk>\d+)/update/$', ReplyUpdateView.as_view(), name='reply_update_view'),
 ]

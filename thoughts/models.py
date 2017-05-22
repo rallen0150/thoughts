@@ -36,3 +36,16 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def get_reply(self):
+        return Reply.objects.filter(blog=self)
+
+class Reply(models.Model):
+    text = models.TextField()
+    blog = models.ForeignKey(Blog)
+    time = models.DateTimeField(auto_now_add=True)
+    writer = models.ForeignKey('auth.User')
+
+    def __str__(self):
+        return self.text

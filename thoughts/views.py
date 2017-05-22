@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from thoughts.models import Blog, Category, Profile
+from thoughts.models import Blog, Category, Profile, Reply
 
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -145,4 +145,20 @@ class BlogTextUpdateView(UpdateView):
 class BlogTitleUpdateView(UpdateView):
     model = Blog
     fields = ('title', )
+    success_url = reverse_lazy('category_list_view')
+
+class ReplyCreateView(CreateView):
+    model = Reply
+    fields = ('text', )
+    success_url = reverse_lazy('category_list_view')
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.writer = self.request.user
+        instance.blog = Blog.objects.get(id=self.kwargs['pk'])
+        return super().form_valid(form)
+
+class ReplyUpdateView(UpdateView):
+    model = Reply
+    fields = ('text', )
     success_url = reverse_lazy('category_list_view')
