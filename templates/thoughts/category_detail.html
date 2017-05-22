@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <a href="{% url 'blog_create_view' object.random_url object.id %}">New Post</a>
+  <a href="{% url 'category_update_view' category.random_url category.id %}">Update Category Name</a> <br>
+  <a href="{% url 'blog_create_view' object.random_url object.id %}">Add A New <i><b>{{ category }}</b></i> Post</a>
   <h1>{{ category }}</h1>
   {% for x in category.get_posts %}
     <div>

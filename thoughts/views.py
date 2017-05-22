@@ -111,6 +111,11 @@ class CategoryDetailView(DetailView):
         context['details'] = Category.objects.filter(id=self.kwargs['pk'])
         return context
 
+class CategoryUpdateView(UpdateView):
+    model = Category
+    fields = ('title', )
+    success_url = reverse_lazy('category_list_view')
+
 class BlogCreateView(CreateView):
     model = Blog
     fields = ('title', 'text')
@@ -131,3 +136,13 @@ class BlogDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['blog'] = Blog.objects.filter(id=self.kwargs['pk'])
         return context
+
+class BlogTextUpdateView(UpdateView):
+    model = Blog
+    fields = ('text', )
+    success_url = reverse_lazy('category_list_view')
+
+class BlogTitleUpdateView(UpdateView):
+    model = Blog
+    fields = ('title', )
+    success_url = reverse_lazy('category_list_view')

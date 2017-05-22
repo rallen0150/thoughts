@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <a href="{% url 'blog_title_update_view' object.random_url object.id %}">Update Title</a>
   {% for post in blog %}
     <h1>{{ post }}</h1>
     <blockquote>
-      <b><i>{{ post.text }}</i></b>
+      <b style="font-size:22px;"><i>{{ post.text }}</i></b> <br>
+      <a href="{% url 'blog_text_update_view' post.random_url post.id %}">Update Text</a>
     </blockquote>
   {% endfor %}
 {% endblock %}

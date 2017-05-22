@@ -9,6 +9,6 @@
       <input type="submit" name="" value="Login">
     </form>
   {% else %}
-    <h1>Hello</h1>
+    <h1>Welcome <i>{{ request.user.profile.first_name }} {{ request.user.profile.last_name }}</i> to your Personal Thoughts</h1>
   {% endif %}
 {% endblock %}
