@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% for x in object_list %}
+  <h1>{{ request.user.profile.get_full_name }}'s Categories</h1>
+  {% for x in category %}
     {% if x.user == request.user %}
-      <a href="{% url 'category_detail_view' x.random_url x.id %}">{{ category }}</a>
+      <div class="different_categories">
+        <a href="{% url 'category_detail_view' x.random_url x.id %}">{{ x }}</a>
+      </div>
     {% endif %}
   {% endfor %}
 {% endblock %}

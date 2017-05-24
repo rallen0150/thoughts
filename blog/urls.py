@@ -1,6 +1,9 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from django.conf.urls.static import static
+from django.conf import settings
+
 from thoughts.views import IndexView, UserCreateView, CategoryCreateView, ProfileUpdateView, \
                            ProfileCreateView, CategoryListView, CategoryDetailView, BlogCreateView, \
                            BlogDetailView, CategoryUpdateView, BlogTextUpdateView, BlogTitleUpdateView, \
@@ -23,4 +26,4 @@ urlpatterns = [
     url(r'^post/(?P<random_url>[-\w]+)/(?P<pk>\d+)/update_title/$', BlogTitleUpdateView.as_view(), name='blog_title_update_view'),
     url(r'^post/(?P<random_url>[-\w]+)/(?P<pk>\d+)/reply/$', ReplyCreateView.as_view(), name='reply_create_view'),
     url(r'reply/(?P<pk>\d+)/update/$', ReplyUpdateView.as_view(), name='reply_update_view'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
