@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1 id="title">{{ request.user.profile.get_full_name }}'s Categories</h1>
+  <h1 id="title">{{ request.user.profile.get_full_name }}'s Personal Categories</h1>
   {% for x in category %}
     {% if x.user == request.user %}
       <div class="different_categories">

@@ -1,21 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <a href="{% url 'blog_title_update_view' object.random_url object.id %}">Update Title</a>
   {% for post in blog %}
-  <div class="text-center">
-    <b id='categories'>{{ post }}</b><br><br>
+    <b id='categories'>{{ post }}</b><br>
+    <a href="{% url 'blog_title_update_view' object.random_url object.id %}"><i class="fa fa-pencil-square-o"></i> Update Title</a><br><br>
       <b style="font-size:22px;"><i>{{ post.text }}</i></b> <br>
       <b style="font-size:16px;"><i>{{ post.date }}</i></b>
-      <a href="{% url 'blog_text_update_view' post.random_url post.id %}">Update Post</a>
+      <a href="{% url 'blog_text_update_view' post.random_url post.id %}"><i class="fa fa-pencil-square-o"></i> Update Post</a>
       <br><br>
-    <a href="{% url 'reply_create_view' post.random_url post.id %}">Reply</a> <br><br>
+    <a style="font-size:16px;" href="{% url 'reply_create_view' post.random_url post.id %}"><i class="fa fa-reply"></i> Reply</a> <br><br>
     {% for reply in post.get_reply %}
       <b style="font-size:22px;"><i>{{ reply }}</i></b> <br>
       <b style="font-size:16px;"><i>{{ reply.time }}</i></b>
-      <a href="{% url 'reply_update_view' reply.id %}">Update Reply</a>
+      <a href="{% url 'reply_update_view' reply.id %}"><i class="fa fa-pencil-square-o"></i> Update Reply</a>
     {% endfor %}
-  </div>
-
   {% endfor %}
 {% endblock %}
