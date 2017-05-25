@@ -3,10 +3,10 @@
 {% block content %}
   <a href="{% url 'category_update_view' category.random_url category.id %}">Update Category Name</a> <br>
   <a href="{% url 'blog_create_view' object.random_url object.id %}">Add A New <i><b>{{ category }}</b></i> Post</a>
-  <h1>{{ category }}</h1>
+  <h1 id="title">{{ category }}</h1>
   {% for x in category.get_posts %}
     <div>
-      <a href="{% url 'blog_detail_view' x.random_url x.id %}">{{ x }}</a>
+      <a id='categories' href="{% url 'blog_detail_view' x.random_url x.id %}">{{ x }}</a>
     </div>
   {% endfor %}
 {% endblock %}
