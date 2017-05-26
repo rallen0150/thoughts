@@ -10,6 +10,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    {% block css %}
+
+    {% endblock %}
 
     <style media="screen">
       body {
@@ -30,7 +33,13 @@
       }
       nav {
         padding-top: 10px;
-        padding-left: 10px;
+        padding-left: 20px;
+      }
+      #door {
+        font-size: 50px;
+      }
+      #reply-button {
+        width: 440px;
       }
     </style>
 
@@ -38,7 +47,6 @@
   <body>
     <div class="container">
       <nav class="navbar navbar-default">
-        <b>Logged in as: {{ request.user }}</b>
         <a href="{% url 'index_view' %}"><i class="fa fa-home"></i> Home</a> |
         {% if not request.user.is_authenticated %}
           <a href="{% url 'user_create_view' %}"><i class="fa fa-user-plus"></i> New User</a> |
@@ -51,7 +59,8 @@
             <a href="{% url 'profile_update_view' request.user.profile.random_url request.user.id %}"><i class="fa fa-user-circle"></i> Profile Update</a> |
           {% endif %}
           <a href="{% url 'logout' %}?next={% url 'index_view' %}"><i class="glyphicon glyphicon-off"></i> Logout</a> |
-        {% endif %}
+        {% endif %}	&nbsp;&nbsp;&nbsp;
+        Logged in as: <b><i><u>{{ request.user }}</u></i></b>
       </nav>
       <br><br>
       <div class="text-center">
@@ -59,7 +68,9 @@
 
         {% endblock %}
       </div>
-
     </div>
+    {% block js %}
+
+    {% endblock %}
   </body>
 </html>

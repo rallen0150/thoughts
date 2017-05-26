@@ -8,11 +8,37 @@
       <b style="font-size:16px;"><i>{{ post.date }}</i></b>
       <a href="{% url 'blog_text_update_view' post.random_url post.id %}"><i class="fa fa-pencil-square-o"></i> Update Post</a>
       <br><br>
-    <a style="font-size:16px;" href="{% url 'reply_create_view' post.random_url post.id %}"><i class="fa fa-reply"></i> Reply</a> <br><br>
+    <form class="" action="{% url 'reply_create_view' post.random_url post.id %}" method="post">
+      {% csrf_token %}
+      <textarea name="text" rows="6" cols="60"></textarea><br>
+      <button type="submit" id="reply-button" class="btn btn-success">Reply!</button>
+    </form> <br><br>
     {% for reply in post.get_reply %}
-      <b style="font-size:22px;"><i>{{ reply }}</i></b> <br>
-      <b style="font-size:16px;"><i>{{ reply.time }}</i></b>
-      <a href="{% url 'reply_update_view' reply.id %}"><i class="fa fa-pencil-square-o"></i> Update Reply</a>
+      <div class="">
+        <b style="font-size:22px;"><i>{{ reply }}</i></b> <br>
+        <b style="font-size:16px;"><i>{{ reply.time }}</i></b>
+        <a href="{% url 'reply_update_view' reply.id %}"><i class="fa fa-pencil-square-o"></i> Update Reply</a>
+            {% comment %}
+            <button class="accordion-update"><i class="fa fa-pencil-square-o"></i> Update</button>
+            <div class="collapse">
+              <form class="" action="{% url 'reply_update_view' reply.id %}" method="post">
+                {% csrf_token %}
+                <textarea name="text" rows="6" cols="60"></textarea><br>
+                <button type="submit" id="reply-button" class="btn btn-success">Update!</button>
+              </form>
+            </div>
+            {% endcomment %}
+      </div><br>
     {% endfor %}
   {% endfor %}
+{% endblock %}
+
+{% block js %}
+  <script>
+    $(document).ready(function(){
+      $(".btn-primary").click(function(){
+          $(".collapse").collapse('toggle');
+      });
+    });
+  </script>
 {% endblock %}

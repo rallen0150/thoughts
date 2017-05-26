@@ -9,7 +9,7 @@
       <input type="submit" name="" value="Login">
     </form>
   {% else %}
-    <h1 id="title">Welcome <i>{{ request.user.profile.get_full_name }}</i> to your Personal Blog</h1>
-    <h3><a href="{% url 'category_list_view' %}">Enter Here to View Your Previous Blogs!</a></h3>
+    <h1 id="title">Welcome <i>{{ request.user.profile.get_full_name }}</i> to your Personal Blog</h1> <br><br><br><br>
+    <a href="{% url 'category_list_view' %}">	<b id="door">&#128682;</b> <b style="font-size:38px;">View Your Previous Blogs!</b></a>
   {% endif %}
 {% endblock %}
