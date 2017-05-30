@@ -1,5 +1,17 @@
 {% extends 'base.html' %}
 
+{% block css %}
+  <style media="screen">
+    #back {
+      font-size: 18px;
+    }
+  </style>
+{% endblock %}
+
+{% block back %}
+  <a id="back" href="{% url 'category_list_view' %}">Back</a>
+{% endblock %}
+
 {% block content %}
   <h1 id="title"><i>{{ category }}</i> by {{ request.user.profile.get_full_name }}</h1>
   <a href="{% url 'category_update_view' category.random_url category.id %}"><i class="fa fa-pencil-square-o"></i> Change The Category's Name</a> <br>

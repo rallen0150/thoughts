@@ -47,7 +47,7 @@ class UserCreateView(FormView):
 class CategoryCreateView(CreateView):
     model = Category
     fields = ('title', )
-    success_url = reverse_lazy('index_view')
+    success_url = reverse_lazy('category_list_view')
 
     def form_valid(self, form):
         instance = form.save(commit=False)

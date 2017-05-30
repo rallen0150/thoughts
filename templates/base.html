@@ -62,6 +62,8 @@
         {% endif %}	&nbsp;&nbsp;&nbsp;
         Logged in as: <b><i><u>{{ request.user }}</u></i></b>
       </nav>
+      {% block back %}
+      {% endblock %}
       <br><br>
       <div class="text-center">
         {% block content %}

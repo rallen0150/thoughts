@@ -1,5 +1,17 @@
 {% extends 'base.html' %}
 
+{% block css %}
+  <style media="screen">
+    #back {
+      font-size: 18px;
+    }
+  </style>
+{% endblock %}
+
+{% block back %}
+  <a id="back" href="{% url 'category_detail_view' object.category.random_url object.category.id %}">Back</a>
+{% endblock %}
+
 {% block content %}
   {% for post in blog %}
     <b id='categories'>{{ post }}</b><br>
