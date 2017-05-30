@@ -12,7 +12,7 @@ from string import ascii_lowercase, ascii_uppercase, digits
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, FormView
 
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -100,12 +100,21 @@ class CategoryDetailView(DetailView):
 class CategoryUpdateView(UpdateView):
     model = Category
     fields = ('title', )
-    success_url = reverse_lazy('category_list_view')
+    # success_url = reverse_lazy('category_list_view')
+    def get_success_url(self, *args, **kwargs):
+        x = Category.objects.get(id=self.kwargs['pk']).id
+        y = Category.objects.get(random_url=self.kwargs['random_url']).random_url
+        return reverse('category_detail_view', args=[y, x])
 
 class BlogCreateView(CreateView):
     model = Blog
     fields = ('title', 'text')
-    success_url = reverse_lazy('category_list_view')
+    # success_url = reverse_lazy('category_list_view')
+
+    def get_success_url(self, *args, **kwargs):
+        x = Category.objects.get(id=self.kwargs['pk']).id
+        y = Category.objects.get(random_url=self.kwargs['random_url']).random_url
+        return reverse('category_detail_view', args=[y, x])
 
     def form_valid(self, form):
         instance = form.save(commit=False)
@@ -127,17 +136,29 @@ class BlogDetailView(DetailView):
 class BlogTextUpdateView(UpdateView):
     model = Blog
     fields = ('text', )
-    success_url = reverse_lazy('category_list_view')
+    # success_url = reverse_lazy('category_list_view')
+    def get_success_url(self, *args, **kwargs):
+        x = Blog.objects.get(id=self.kwargs['pk']).id
+        y = Blog.objects.get(random_url=self.kwargs['random_url']).random_url
+        return reverse('blog_detail_view', args=[y, x])
 
 class BlogTitleUpdateView(UpdateView):
     model = Blog
     fields = ('title', )
-    success_url = reverse_lazy('category_list_view')
+    # success_url = reverse_lazy('category_list_view')
+    def get_success_url(self, *args, **kwargs):
+        x = Blog.objects.get(id=self.kwargs['pk']).id
+        y = Blog.objects.get(random_url=self.kwargs['random_url']).random_url
+        return reverse('blog_detail_view', args=[y, x])
 
 class ReplyCreateView(CreateView):
     model = Reply
     fields = ('text', )
-    success_url = reverse_lazy('category_list_view')
+    # success_url = reverse_lazy('category_list_view')
+    def get_success_url(self, *args, **kwargs):
+        x = Blog.objects.get(id=self.kwargs['pk']).id
+        y = Blog.objects.get(random_url=self.kwargs['random_url']).random_url
+        return reverse('blog_detail_view', args=[y, x])
 
     def form_valid(self, form):
         instance = form.save(commit=False)
@@ -148,4 +169,8 @@ class ReplyCreateView(CreateView):
 class ReplyUpdateView(UpdateView):
     model = Reply
     fields = ('text', )
-    success_url = reverse_lazy('category_list_view')
+    # success_url = reverse_lazy('category_list_view')
+    def get_success_url(self, *args, **kwargs):
+        x = Reply.objects.get(id=self.kwargs['pk']).blog.id
+        y = Reply.objects.get(id=self.kwargs['pk']).blog.random_url
+        return reverse('blog_detail_view', args=[y, x])
