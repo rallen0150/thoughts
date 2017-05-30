@@ -13,13 +13,19 @@
 {% endblock %}
 
 {% block content %}
-  <h1 id="title"><i>{{ category }}</i> by {{ request.user.profile.get_full_name }}</h1>
-  <a href="{% url 'category_update_view' category.random_url category.id %}"><i class="fa fa-pencil-square-o"></i> Change The Category's Name</a> <br>
-  <a href="{% url 'blog_create_view' object.random_url object.id %}"><i class="glyphicon glyphicon-plus-sign"></i> Add A New <i><b>{{ category }}</b></i> Post</a>
-  <br><br>
-  {% for x in category.get_posts %}
-    <div>
-      <a id='categories' href="{% url 'blog_detail_view' x.random_url x.id %}">{{ x }}</a>
+  {% if request.user == object.user %}
+    <h1 id="title"><i>{{ category }}</i> by {{ request.user.profile.get_full_name }}</h1>
+    <a href="{% url 'category_update_view' category.random_url category.id %}"><i class="fa fa-pencil-square-o"></i> Change The Category's Name</a> <br>
+    <a href="{% url 'blog_create_view' object.random_url object.id %}"><i class="glyphicon glyphicon-plus-sign"></i> Add A New <i><b>{{ category }}</b></i> Post</a>
+    <br><br>
+    {% for x in category.get_posts %}
+      <div>
+        <a id='categories' href="{% url 'blog_detail_view' x.random_url x.id %}">{{ x }}</a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-danger">
+      <h1>You <u><i>CANNOT</i></u> See Another User's Posts!</h1>
     </div>
-  {% endfor %}
+  {% endif %}
 {% endblock %}

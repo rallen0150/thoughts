@@ -99,14 +99,20 @@
 {% endblock %}
 
 {% block content %}
-  <div class="modal-dialog">
-    <div class="loginmodal-container">
-      <h1>Anything Else to Say?</h1><br>
-      <form class="" action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" class="btn btn-success" name="" value="Reply">
-      </form>
+  {% if request.user == object.writer %}
+    <div class="modal-dialog">
+      <div class="loginmodal-container">
+        <h1>Anything Else to Say?</h1><br>
+        <form class="" action="" method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" class="btn btn-success" name="" value="Reply">
+        </form>
+      </div>
     </div>
-  </div>
+  {% else %}
+    <div class="alert alert-danger">
+      <h1>You are <u><i>NOT</i></u> Permitted to Update this Reply!</h1>
+    </div>
+  {% endif %}
 {% endblock %}

@@ -101,6 +101,7 @@ class CategoryUpdateView(UpdateView):
     model = Category
     fields = ('title', )
     # success_url = reverse_lazy('category_list_view')
+    template_name = 'thoughts/category_update.html'
     def get_success_url(self, *args, **kwargs):
         x = Category.objects.get(id=self.kwargs['pk']).id
         y = Category.objects.get(random_url=self.kwargs['random_url']).random_url
@@ -136,6 +137,7 @@ class BlogDetailView(DetailView):
 class BlogTextUpdateView(UpdateView):
     model = Blog
     fields = ('text', )
+    template_name = 'thoughts/blog_text_update.html'
     # success_url = reverse_lazy('category_list_view')
     def get_success_url(self, *args, **kwargs):
         x = Blog.objects.get(id=self.kwargs['pk']).id
@@ -145,6 +147,7 @@ class BlogTextUpdateView(UpdateView):
 class BlogTitleUpdateView(UpdateView):
     model = Blog
     fields = ('title', )
+    template_name = 'thoughts/blog_title_update.html'
     # success_url = reverse_lazy('category_list_view')
     def get_success_url(self, *args, **kwargs):
         x = Blog.objects.get(id=self.kwargs['pk']).id
@@ -170,6 +173,7 @@ class ReplyUpdateView(UpdateView):
     model = Reply
     fields = ('text', )
     # success_url = reverse_lazy('category_list_view')
+    template_name = 'thoughts/reply_update.html'
     def get_success_url(self, *args, **kwargs):
         x = Reply.objects.get(id=self.kwargs['pk']).blog.id
         y = Reply.objects.get(id=self.kwargs['pk']).blog.random_url

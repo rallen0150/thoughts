@@ -13,36 +13,42 @@
 {% endblock %}
 
 {% block content %}
-  {% for post in blog %}
-    <b id='categories'>{{ post }}</b><br>
-    <a href="{% url 'blog_title_update_view' object.random_url object.id %}"><i class="fa fa-pencil-square-o"></i> Update Title</a><br><br>
-      <b style="font-size:22px;"><i>{{ post.text }}</i></b> <br>
-      <b style="font-size:16px;"><i>{{ post.date }}</i></b>
-      <a href="{% url 'blog_text_update_view' post.random_url post.id %}"><i class="fa fa-pencil-square-o"></i> Update Post</a>
-      <br><br>
-    <form class="" action="{% url 'reply_create_view' post.random_url post.id %}" method="post">
-      {% csrf_token %}
-      <textarea name="text" rows="6" cols="60"></textarea><br>
-      <button type="submit" id="reply-button" class="btn btn-success">Reply!</button>
-    </form> <br><br>
-    {% for reply in post.get_reply %}
-      <div class="">
-        <b style="font-size:22px;"><i>{{ reply }}</i></b> <br>
-        <b style="font-size:16px;"><i>{{ reply.time }}</i></b>
-        <a href="{% url 'reply_update_view' reply.id %}"><i class="fa fa-pencil-square-o"></i> Update Reply</a>
-            {% comment %}
-            <button class="accordion-update"><i class="fa fa-pencil-square-o"></i> Update</button>
-            <div class="collapse">
-              <form class="" action="{% url 'reply_update_view' reply.id %}" method="post">
-                {% csrf_token %}
-                <textarea name="text" rows="6" cols="60"></textarea><br>
-                <button type="submit" id="reply-button" class="btn btn-success">Update!</button>
-              </form>
-            </div>
-            {% endcomment %}
-      </div><br>
+  {% if request.user == object.writer %}
+    {% for post in blog %}
+      <b id='categories'>{{ post }}</b><br>
+      <a href="{% url 'blog_title_update_view' object.random_url object.id %}"><i class="fa fa-pencil-square-o"></i> Update Title</a><br><br>
+        <b style="font-size:22px;"><i>{{ post.text }}</i></b> <br>
+        <b style="font-size:16px;"><i>{{ post.date }}</i></b>
+        <a href="{% url 'blog_text_update_view' post.random_url post.id %}"><i class="fa fa-pencil-square-o"></i> Update Post</a>
+        <br><br>
+      <form class="" action="{% url 'reply_create_view' post.random_url post.id %}" method="post">
+        {% csrf_token %}
+        <textarea name="text" rows="6" cols="60"></textarea><br>
+        <button type="submit" id="reply-button" class="btn btn-success">Reply!</button>
+      </form> <br><br>
+      {% for reply in post.get_reply %}
+        <div class="">
+          <b style="font-size:22px;"><i>{{ reply }}</i></b> <br>
+          <b style="font-size:16px;"><i>{{ reply.time }}</i></b>
+          <a href="{% url 'reply_update_view' reply.id %}"><i class="fa fa-pencil-square-o"></i> Update Reply</a>
+              {% comment %}
+              <button class="accordion-update"><i class="fa fa-pencil-square-o"></i> Update</button>
+              <div class="collapse">
+                <form class="" action="{% url 'reply_update_view' reply.id %}" method="post">
+                  {% csrf_token %}
+                  <textarea name="text" rows="6" cols="60"></textarea><br>
+                  <button type="submit" id="reply-button" class="btn btn-success">Update!</button>
+                </form>
+              </div>
+              {% endcomment %}
+        </div><br>
+      {% endfor %}
     {% endfor %}
-  {% endfor %}
+  {% else %}
+    <div class="alert alert-danger">
+      <h1>You <u><i>CANNOT</i></u> See Another User's Posts!</h1>
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block js %}
